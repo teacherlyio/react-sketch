@@ -10,6 +10,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 const port = 23000;
 
@@ -79,7 +80,11 @@ const config = {
       }
     }),
     new OpenBrowserPlugin({ url: 'http://localhost:' + port })
-  ]
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
 };
 
 new WebpackDevServer(webpack(config), config.devServer)
