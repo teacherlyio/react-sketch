@@ -191,8 +191,9 @@ class SketchField extends PureComponent {
     this._history.keep([obj, state, state])
 
     if(!obj.sender) {
-      obj.id = nanoid()
-      onObjectAdded(e, state, username, obj.id);
+      const newObj = obj.__originalState
+      newObj.id = nanoid()
+      onObjectAdded(e, JSON.stringify(newObj), username, newObj.id);
     }
   };
 
@@ -231,7 +232,8 @@ class SketchField extends PureComponent {
     let currState = JSON.stringify(objState);
     this._history.keep([obj, prevState, currState]);
     if (!obj.sender) {
-      onObjectModified(e, currState, username, obj.id);
+      let strObj = JSON.stringify(obj);
+      onObjectModified(e, strObj, username, obj.id);
     }
   };
 
