@@ -183,7 +183,6 @@ class SketchField extends PureComponent {
     }
     let obj = e.target;
     obj.__version = 1;
-    obj.id = nanoid()
     // record current object state as json and save as originalState
     let objState = obj.toJSON();
     obj.__originalState = objState;
@@ -192,6 +191,7 @@ class SketchField extends PureComponent {
     this._history.keep([obj, state, state])
 
     if(!obj.sender) {
+      obj.id = nanoid()
       onObjectAdded(e, state, username, obj.id);
     }
   };
