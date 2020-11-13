@@ -1,6 +1,6 @@
 {
   "name": "react-sketch-whiteboard",
-  "version": "2.0.0",
+  "version": "3.0.2",
   "description": "Sketch Element for React based applications, backed-up by fabricjs as its core",
   "keywords": [
     "react",
@@ -135,6 +135,6 @@
     "prop-types": "^15.6.2",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "terser-webpack-plugin": "^5.0.3"
+    "terser-webpack-plugin": "4.2.3"
   }
 }

@@ -190,8 +190,10 @@ class SketchField extends PureComponent {
     let state = JSON.stringify(objState);
     // object, previous state, current state
     this._history.keep([obj, state, state])
-    console.log("ddd state", state)
-    onObjectAdded(e, username);
+
+    if(!obj.sender) {
+      onObjectAdded(e, state, username, obj.id);
+    }
   };
 
   /**
@@ -228,7 +230,9 @@ class SketchField extends PureComponent {
     obj.__originalState = objState;
     let currState = JSON.stringify(objState);
     this._history.keep([obj, prevState, currState]);
-    onObjectModified(e, username);
+    if (!obj.sender) {
+      onObjectModified(e, currState, username, obj.id);
+    }
   };
 
   /**
