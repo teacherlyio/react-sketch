@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import History from './history';
 import {uuid4} from './utils';
 import Select from './select';
+import Triangle from './triangle';
 import Pencil from './pencil';
 import Line from './line';
 import Arrow from './arrow';
@@ -120,6 +121,7 @@ class SketchField extends PureComponent {
     this._tools[Tool.RectangleLabel] = new RectangleLabel(fabricCanvas);
     this._tools[Tool.Circle] = new Circle(fabricCanvas);
     this._tools[Tool.Pan] = new Pan(fabricCanvas);
+    this._tools[Tool.Triangle] = new Triangle(fabricCanvas);
     this._tools[Tool.DefaultTool] = new DefaultTool(fabricCanvas);
   };
 
@@ -190,10 +192,19 @@ class SketchField extends PureComponent {
     // object, previous state, current state
     this._history.keep([obj, state, state])
     console.log("added object", obj)
-    if(!obj.sender) {
-      const id = nanoid(); 
-      Object.assign(obj, { id });
-      onObjectAdded(obj, username, id);
+    if(!obj.id) {
+      
+      obj.set('id', nanoid())
+      obj.setCoords()
+      this._fc.renderAll()
+      console.log("obj type", obj.type)
+      if (obj.type == 'circle' || obj.type == 'rect' || obj.type == 'line') {
+        setTimeout(() => {
+          onObjectAdded(JSON.stringify(obj), username, obj.id);
+        }, 500);
+      } else {
+        onObjectAdded(JSON.stringify(obj), username, obj.id);
+      }
     }
   };
 
@@ -232,10 +243,8 @@ class SketchField extends PureComponent {
     let currState = JSON.stringify(objState);
     this._history.keep([obj, prevState, currState]);
     console.log("modified object", obj)
-    if (!obj.sender) {
-      let strObj = JSON.stringify(obj);
-      onObjectModified(strObj, username, obj.id);
-    }
+    let strObj = JSON.stringify(obj);
+    onObjectModified(strObj, username, obj.id);
   };
 
   /**
@@ -571,6 +580,10 @@ class SketchField extends PureComponent {
     let shapeData = JSON.parse(obj);
 
     let shape = null;
+    console.log("obj", obj)
+    console.log("obfffj", typeof obj)
+    console.log("shapeData type", typeof shapeData)
+    console.log("shapeData", shapeData)
     const type = this._capsFirstLetter(shapeData.type);
     if (type == 'Path') {
       let string_path = '';
@@ -585,9 +598,11 @@ class SketchField extends PureComponent {
       shape = new fabric.Text(shapeData.text); 
       delete shapeData.text;
       shape.set(shapeData);
-    } else {
+    } else if (type == 'Circle' || type == 'Rect') {
       // for Rectangle and Circle objects
       shape = new fabric[type](shapeData);
+    } else if (type == 'Line') {
+      shape = new fabric.Line([shapeData.x1, shapeData.y1, shapeData.x2,  shapeData.y2], shapeData)
     }
 
     canvas.add(shape);
@@ -604,9 +619,17 @@ class SketchField extends PureComponent {
     var objToModify = canvas.getObjects().find((o) => {
       return objData.id == o.id;
     });
-    objToModify.set(objData); // update the object
-    objToModify.setCoords(); // useful if the object's coordinates in the canvas also changed (usually by moving)
-    canvas.requestRenderAll(); // refresh the canvas so changes will appear
+    console.log("objData", objData)
+
+    if(objToModify.type == 'line') {
+      this.setSelected(objToModify.id)
+      this.removeSelected()
+      this.addObject(obj)
+    } else {
+      objToModify.set(objData); // update the object 
+      objToModify.setCoords(); // useful if the object's coordinates in the canvas also changed (usually by moving)
+      canvas.requestRenderAll(); // refresh the canvas so changes will appear
+    }
   }
 
   _capsFirstLetter = (str) => {

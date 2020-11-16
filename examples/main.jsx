@@ -243,12 +243,12 @@ class SketchFieldDemo extends React.Component {
     }
   };
 
-  _onSketchObjectAdd = (e, username) => {
-    console.log("object added", e, username)
+  _onSketchObjectAdd = (obj, username, id) => {
+    console.log("object added callback", obj, username, id)
   }
 
-  _onSketchObjectModified = (e) => {
-    console.log("ggggg", e)
+  _onSketchObjectModified = (obj, username, id) => {
+    console.log("object modified callback", obj, username, id)
   }
 
   _onSketchObjectMoving = (e) => {
@@ -272,10 +272,51 @@ class SketchFieldDemo extends React.Component {
   }
 
   _onAddObject = () => {
-    const obj = {"type":"path","version":"3.5.1","originX":"left","originY":"top","left":378.99,"top":137,"width":85.02,"height":0,"fill":null,"stroke":"black","strokeWidth":10,"strokeDashArray":null,"strokeLineCap":"round","strokeDashOffset":0,"strokeLineJoin":"round","strokeMiterLimit":10,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"path":[["M",383.99,142],["Q",384,142,385,142],["Q",386,142,388.5,142],["Q",391,142,393.5,142],["Q",396,142,398.5,142],["Q",401,142,404,142],["Q",407,142,411,142],["Q",415,142,419.5,142],["Q",424,142,427.5,142],["Q",431,142,433,142],["Q",435,142,439,142],["Q",443,142,446,142],["Q",449,142,452,142],["Q",455,142,456,142],["Q",457,142,459,142],["Q",461,142,462.5,142],["Q",464,142,465,142],["Q",466,142,466.5,142],["Q",467,142,467.5,142],["Q",468,142,468.5,142],["L",469.01,142]]}
+    // const obj = {"type":"circle","version":"3.5.1","originX":"left","originY":"center","left":261,"top":272,"width":2,"height":2,"fill":"transparent","stroke":"black","strokeWidth":3,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"radius":1,"startAngle":0,"endAngle":6.283185307179586}
+    const obj = {
+      "id":"j",
+      "type": "line",
+      "originX": "center",
+      "originY": "center",
+      "left": 260.91,
+      "top": 135.92,
+      "width": 12,
+      "height": 148,
+      "fill": "black",
+      "stroke": "black",
+      "strokeWidth": 2,
+      "strokeDashArray": null,
+      "strokeLineCap": "butt",
+      "strokeLineJoin": "miter",
+      "strokeMiterLimit": 10,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "flipX": false,
+      "flipY": false,
+      "opacity": 1,
+      "shadow": null,
+      "visible": true,
+      "clipTo": null,
+      "backgroundColor": "",
+      "fillRule": "nonzero",
+      "globalCompositeOperation": "source-over",
+      "x1": 6.00002665094685,
+      "x2": -6.00002665094685,
+      "y1": 74.00152346160806,
+      "y2": -74.00152346160806
+  }
     const objStr = JSON.stringify(obj)
     let sketch = this._sketch;
     sketch.addObject(objStr)
+  }
+
+  _onModifyObject = () => {
+    // const obj = {"id":'eMbCmATKBj_H06etPX7E_',"type":"circle","version":"3.5.1","originX":"left","originY":"center","left":517,"top":216,"width":267.73,"height":267.73,"fill":"transparent","stroke":"black","strokeWidth":3,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":35.11,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"radius":133.86280289908768,"startAngle":0,"endAngle":6.283185307179586}
+    const obj = {"id":"j","type":"line","version":"3.5.1","originX":"center","originY":"center","left":659.91,"top":336.92,"width":12,"height":148,"fill":"black","stroke":"black","strokeWidth":2,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":10,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"x1":6.00002665094685,"x2":-6.00002665094685,"y1":74.00152346160806,"y2":-74.00152346160806}
+    const objStr = JSON.stringify(obj)
+    let sketch = this._sketch;
+    sketch.modifyObject(objStr)
   }
 
   _onBackgroundImageDrop = (accepted /*, rejected*/) => {
@@ -397,7 +438,7 @@ class SketchFieldDemo extends React.Component {
               height={
                 this.state.controlledSize ? this.state.sketchHeight : null
               }
-              defaultValue={dataJson}
+              // defaultValue={dataJson}
               value={controlledValue}
               forceValue
               onChange={this._onSketchChange}
@@ -413,6 +454,7 @@ class SketchFieldDemo extends React.Component {
           </div>
           
           <button onClick={this._onAddObject}>Add object</button>
+          <button onClick={this._onModifyObject}>Modify object</button>
 
           <div className="col-xs-5 col-sm-5 col-md-3 col-lg-3">
             <Card style={styles.card}>
@@ -442,6 +484,7 @@ class SketchFieldDemo extends React.Component {
                         <MenuItem value={Tools.Rectangle} key="Rectangle">Rectangle</MenuItem>
                         <MenuItem value={Tools.Circle} key="Circle">Circle</MenuItem>
                         <MenuItem value={Tools.Pan} key="Pan">Pan</MenuItem>
+                        <MenuItem value={Tools.Triangle} key="Triangle">Triangle</MenuItem>
                         <MenuItem value={Tools.RectangleLabel} key="Pan">RectangleLabel</MenuItem>
                       </TextField>
                     </div>

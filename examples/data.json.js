@@ -1,6 +1,7 @@
 export default {
     "objects": [
         {
+            "id":"a",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -33,6 +34,7 @@ export default {
             "y2": 81.00166757284126
         },
         {
+            "id":"b",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -65,6 +67,7 @@ export default {
             "y2": -0.5000102936595141
         },
         {
+            "id":"c",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -97,6 +100,7 @@ export default {
             "y2": 93.5019249143291
         },
         {
+            "id":"d",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -129,6 +133,7 @@ export default {
             "y2": 0
         },
         {
+            "id":"e",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -161,6 +166,7 @@ export default {
             "y2": -16.500339690763965
         },
         {
+            "id":"f",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -193,6 +199,7 @@ export default {
             "y2": 0
         },
         {
+            "id":"g",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -225,6 +232,7 @@ export default {
             "y2": 32.5006690878684
         },
         {
+            "id":"h",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -257,6 +265,7 @@ export default {
             "y2": 0.5000102936595141
         },
         {
+            "id":"i",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -289,6 +298,7 @@ export default {
             "y2": -78.00160581088417
         },
         {
+            "id":"j",
             "type": "line",
             "originX": "center",
             "originY": "center",
@@ -321,6 +331,7 @@ export default {
             "y2": -74.00152346160806
         },
         {
+            "id":"k",
             "type": "circle",
             "originX": "left",
             "originY": "center",
@@ -352,6 +363,7 @@ export default {
             "endAngle": 6.283185307179586
         },
         {
+            "id":"l",
             "type": "rect",
             "originX": "left",
             "originY": "top",
@@ -382,6 +394,7 @@ export default {
             "ry": 0
         },
         {
+            "id":"m",
             "type": "circle",
             "originX": "left",
             "originY": "center",
