@@ -198,7 +198,7 @@ class SketchField extends PureComponent {
       obj.setCoords()
       this._fc.renderAll()
       console.log("obj type", obj.type)
-      if (obj.type == 'circle' || obj.type == 'rect' || obj.type == 'line') {
+      if (obj.type == 'circle' || obj.type == 'rect' || obj.type == 'line' || obj.type == 'triangle') {
         setTimeout(() => {
           onObjectAdded(JSON.stringify(obj), username, obj.id);
         }, 500);
@@ -598,8 +598,8 @@ class SketchField extends PureComponent {
       shape = new fabric.Text(shapeData.text); 
       delete shapeData.text;
       shape.set(shapeData);
-    } else if (type == 'Circle' || type == 'Rect') {
-      // for Rectangle and Circle objects
+    } else if (type == 'Circle' || type == 'Rect' || type == 'Triangle') {
+      // for Rectangle, Circle, Triangle objects
       shape = new fabric[type](shapeData);
     } else if (type == 'Line') {
       shape = new fabric.Line([shapeData.x1, shapeData.y1, shapeData.x2,  shapeData.y2], shapeData)

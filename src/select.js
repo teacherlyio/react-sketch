@@ -10,6 +10,9 @@ class Select extends FabricCanvasTool {
     canvas.selection = true;
     canvas.forEachObject((o) => {
       o.selectable = o.evented = true;
+      if(o.type == 'triangle') {
+        o.setCoords();
+      }
     });
   }
 }
