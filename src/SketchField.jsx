@@ -178,7 +178,7 @@ class SketchField extends PureComponent {
    * Action when an object is added to the canvas
    */
   _onObjectAdded = (e) => {
-    const {onObjectAdded, username='default'} = this.props;
+    const {onObjectAdded} = this.props;
     if (!this.state.action) {
       this.setState({ action: true });
       return
@@ -200,10 +200,10 @@ class SketchField extends PureComponent {
       const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group']
       if (delay_objs.includes(obj.type)) {
         setTimeout(() => {
-          onObjectAdded(JSON.stringify(obj), username, obj.id);
-        }, 200);
+          onObjectAdded(JSON.stringify(obj), obj.id);
+        }, 400);
       } else {
-        onObjectAdded(JSON.stringify(obj), username, obj.id);
+        onObjectAdded(JSON.stringify(obj), obj.id);
       }
     }
   };
@@ -233,7 +233,7 @@ class SketchField extends PureComponent {
   };
 
   _onObjectModified = (e) => {
-    const {onObjectModified, username='default'} = this.props;
+    const {onObjectModified} = this.props;
     let obj = e.target;
     obj.__version += 1;
     let prevState = JSON.stringify(obj.__originalState);
@@ -242,9 +242,9 @@ class SketchField extends PureComponent {
     obj.__originalState = objState;
     let currState = JSON.stringify(objState);
     this._history.keep([obj, prevState, currState]);
-    console.log("modified object", obj)
+    
     let strObj = JSON.stringify(obj);
-    onObjectModified(strObj, username, obj.id);
+    onObjectModified(strObj, obj.id);
   };
 
   /**
@@ -580,10 +580,6 @@ class SketchField extends PureComponent {
     let shapeData = JSON.parse(obj);
 
     let shape = null;
-    console.log("obj", obj)
-    console.log("obfffj", typeof obj)
-    console.log("shapeData type", typeof shapeData)
-    console.log("shapeData", shapeData)
     const type = this._capsFirstLetter(shapeData.type);
     if (type == 'Path') {
       let string_path = '';
@@ -636,7 +632,6 @@ class SketchField extends PureComponent {
     var objToModify = canvas.getObjects().find((o) => {
       return objData.id == o.id;
     });
-    console.log("objData", objData)
 
     if(objToModify.type == 'line') {
       this.setSelected(objToModify.id)
