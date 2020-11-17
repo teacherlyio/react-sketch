@@ -569,8 +569,10 @@ class SketchField extends PureComponent {
     var objToSelect = canvas.getObjects().find((o) => {
       return id == o.id;
     });
-    canvas.setActiveObject(objToSelect);
-    canvas.requestRenderAll();
+    if(objToSelect) {
+      canvas.setActiveObject(objToSelect);
+      canvas.requestRenderAll();
+    }
   };
 
   /**
@@ -627,14 +629,16 @@ class SketchField extends PureComponent {
    * Modify object on the canvas
    */
   modifyObject = (obj) => {
-
+    
     let objData = JSON.parse(obj);
     let canvas = this._fc;
-
+    
     var objToModify = canvas.getObjects().find((o) => {
       return objData.id == o.id;
     });
 
+    if (!objToModify) return
+    
     if(objToModify.type == 'line') {
       this.setSelected(objToModify.id)
       this.removeSelected()
