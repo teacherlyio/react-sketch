@@ -260,7 +260,7 @@ class SketchField extends PureComponent {
       return
     }
     obj.__version = 0;
-    onObjectRemoved(e);
+    onObjectRemoved(obj, obj.id);
   };
 
   /**
