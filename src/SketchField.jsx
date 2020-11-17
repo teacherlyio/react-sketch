@@ -6,6 +6,7 @@ import History from './history';
 import {uuid4} from './utils';
 import Select from './select';
 import Triangle from './triangle';
+import Remove from './remove';
 import Pencil from './pencil';
 import Line from './line';
 import Arrow from './arrow';
@@ -122,6 +123,7 @@ class SketchField extends PureComponent {
     this._tools[Tool.Circle] = new Circle(fabricCanvas);
     this._tools[Tool.Pan] = new Pan(fabricCanvas);
     this._tools[Tool.Triangle] = new Triangle(fabricCanvas);
+    this._tools[Tool.Remove] = new Remove(fabricCanvas);
     this._tools[Tool.DefaultTool] = new DefaultTool(fabricCanvas);
   };
 

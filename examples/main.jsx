@@ -243,12 +243,12 @@ class SketchFieldDemo extends React.Component {
     }
   };
 
-  _onSketchObjectAdd = (obj, username, id) => {
-    console.log("object added callback", obj, username, id)
+  _onSketchObjectAdd = (obj, id) => {
+    console.log("object added callback", obj, id)
   }
 
-  _onSketchObjectModified = (obj, username, id) => {
-    console.log("object modified callback", obj, username, id)
+  _onSketchObjectModified = (obj, id) => {
+    console.log("object modified callback", obj, id)
   }
 
   _onSketchObjectMoving = (e) => {
@@ -443,7 +443,6 @@ class SketchFieldDemo extends React.Component {
               // defaultValue={dataJson}
               value={controlledValue}
               forceValue
-              isPreview={true}
               onChange={this._onSketchChange}
               onObjectAdded={this._onSketchObjectAdd}
               onObjectModified={this._onSketchObjectModified}
@@ -488,6 +487,7 @@ class SketchFieldDemo extends React.Component {
                         <MenuItem value={Tools.Circle} key="Circle">Circle</MenuItem>
                         <MenuItem value={Tools.Pan} key="Pan">Pan</MenuItem>
                         <MenuItem value={Tools.Triangle} key="Triangle">Triangle</MenuItem>
+                        <MenuItem value={Tools.Remove} key="Remove">Remove</MenuItem>
                         <MenuItem value={Tools.RectangleLabel} key="Pan">RectangleLabel</MenuItem>
                       </TextField>
                     </div>
