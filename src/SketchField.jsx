@@ -201,7 +201,7 @@ class SketchField extends PureComponent {
       if (delay_objs.includes(obj.type)) {
         setTimeout(() => {
           onObjectAdded(JSON.stringify(obj), obj.id);
-        }, 400);
+        }, 600);
       } else {
         onObjectAdded(JSON.stringify(obj), obj.id);
       }
@@ -599,14 +599,14 @@ class SketchField extends PureComponent {
     } else if (type == 'Line') {
       shape = new fabric.Line([shapeData.x1, shapeData.y1, shapeData.x2,  shapeData.y2], shapeData)
     } else if (type == 'Group') {
-      const elements = this.getGroupElements(shapeData.objects)
+      const elements = this._getGroupElements(shapeData.objects)
       shape = new fabric.Group(elements, shapeData)
     }
 
     canvas.add(shape);
   }
 
-  getGroupElements = (objects) => {
+  _getGroupElements = (objects) => {
     const elements = []
     objects.forEach(el => {
       // TODO: handle other elements
@@ -739,24 +739,28 @@ class SketchField extends PureComponent {
       value,
       undoSteps,
       defaultValue,
+      isPreview = false,
       backgroundColor
     } = this.props;
 
-    let canvas = this._fc = new fabric.Canvas(this._canvas/*, {
+    let canvas = this._fc = isPreview ? new fabric.StaticCanvas(this._canvas) : new fabric.Canvas(this._canvas/*, {
          preserveObjectStacking: false,
          renderOnAddRemove: false,
          skipTargetFind: true
          }*/);
 
+    
     this._initTools(canvas);
 
     // set initial backgroundColor
     this._backgroundColor(backgroundColor)
 
-    let selectedTool = this._tools[tool];
-    if(selectedTool)
-      selectedTool.configureCanvas(this.props);
-    this._selectedTool = selectedTool;
+    if(!isPreview) {
+      let selectedTool = this._tools[tool];
+      if(selectedTool)
+        selectedTool.configureCanvas(this.props);
+      this._selectedTool = selectedTool;
+    }
 
     // Control resize
     window.addEventListener('resize', this._resize, false);
