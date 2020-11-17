@@ -73,6 +73,7 @@ class Arrow extends FabricCanvasTool {
     canvas.remove(this.head);
     let arrow = new fabric.Group([this.line, this.head]);
     canvas.add(arrow);
+    canvas.forEachObject((o) => o.selectable = o.evented = false);
   }
 
   doMouseOut(o) {
