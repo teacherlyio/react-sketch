@@ -8,6 +8,7 @@ class Select extends FabricCanvasTool {
     let canvas = this._canvas;
     canvas.isDrawingMode = false;
     canvas.selection = true;
+    canvas.hoverCursor = 'move';
     canvas.forEachObject((o) => {
       o.selectable = o.evented = true;
       if(o.type == 'triangle') {
