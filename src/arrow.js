@@ -26,7 +26,8 @@ class Arrow extends FabricCanvasTool {
       originX: 'center',
       originY: 'center',
       selectable: false,
-      evented: false
+      evented: false,
+      temporary: true
     });
 
     this.head = new fabric.Triangle({
@@ -39,7 +40,8 @@ class Arrow extends FabricCanvasTool {
       width: 3 * this._width,
       selectable: false,
       evented: false,
-      angle: 90
+      angle: 90,
+      temporary: true
     });
 
     canvas.add(this.line);

@@ -191,17 +191,17 @@ class SketchField extends PureComponent {
     let state = JSON.stringify(objState);
     // object, previous state, current state
     this._history.keep([obj, state, state])
-    console.log("added object", obj)
-    if(!obj.id) {
-      
+
+    if(!obj.id && !obj.temporary) {
       obj.set('id', nanoid())
       obj.setCoords()
       this._fc.renderAll()
-      console.log("obj type", obj.type)
-      if (obj.type == 'circle' || obj.type == 'rect' || obj.type == 'line' || obj.type == 'triangle') {
+      
+      const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group']
+      if (delay_objs.includes(obj.type)) {
         setTimeout(() => {
           onObjectAdded(JSON.stringify(obj), username, obj.id);
-        }, 500);
+        }, 200);
       } else {
         onObjectAdded(JSON.stringify(obj), username, obj.id);
       }
@@ -599,13 +599,30 @@ class SketchField extends PureComponent {
       delete shapeData.text;
       shape.set(shapeData);
     } else if (type == 'Circle' || type == 'Rect' || type == 'Triangle') {
-      // for Rectangle, Circle, Triangle objects
       shape = new fabric[type](shapeData);
     } else if (type == 'Line') {
       shape = new fabric.Line([shapeData.x1, shapeData.y1, shapeData.x2,  shapeData.y2], shapeData)
+    } else if (type == 'Group') {
+      const elements = this.getGroupElements(shapeData.objects)
+      shape = new fabric.Group(elements, shapeData)
     }
 
     canvas.add(shape);
+  }
+
+  getGroupElements = (objects) => {
+    const elements = []
+    objects.forEach(el => {
+      // TODO: handle other elements
+      if(el.type == 'line') {
+        elements.push(new fabric.Line([el.x1, el.y1, el.x2,  el.y2], el))
+      }
+      if(el.type == 'triangle') {
+        elements.push(new fabric.Triangle(el))
+      }
+    })
+
+    return elements;
   }
 
   /**
