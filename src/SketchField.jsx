@@ -83,6 +83,8 @@ class SketchField extends PureComponent {
     className: PropTypes.string,
     // Style options to pass to container div of canvas
     style: PropTypes.object,
+    // StaticCanvas vs Canvas option
+    isPreview: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -608,6 +610,42 @@ class SketchField extends PureComponent {
     }
 
     canvas.add(shape);
+  }
+
+  getPointer = (e) => {
+    let canvas = this._fc;
+    return canvas.getPointer(e);
+  }
+  /**
+   * Add pointer object to the canvas
+   */
+  addPointerObject = (options, duration = 100, userSession) => {
+    let canvas = this._fc;
+
+    var objToModify = canvas.getObjects().find((o) => {
+      return userSession == o.id;
+    });
+
+    if(objToModify) {
+
+      objToModify.animate(options, { onChange: canvas.renderAll.bind(canvas), duration });
+
+    } else {
+  
+      let circle = new fabric.Circle({
+        id: userSession,
+        ...options,
+        originX: 'left', 
+        originY: 'center',
+        strokeWidth: 1,
+        stroke: 'red',
+        fill: 'red',
+        selectable: false,
+        evented: false,
+        radius: 4
+      });
+      canvas.add(circle);
+    }
   }
 
   _getGroupElements = (objects) => {

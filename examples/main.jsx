@@ -146,6 +146,10 @@ class SketchFieldDemo extends React.Component {
       text: 'a text, cool!',
       enableCopyPaste: false,
     };
+
+    this.scheduled = false; 
+    this.lastEvent = null;
+    this.pointerDuration = 100;
   }
 
   _selectTool = event => {
@@ -263,8 +267,23 @@ class SketchFieldDemo extends React.Component {
     // console.log("ddddown", e)
   }
 
+  displayPointer = (o) => {
+    let sketch = this._sketch;
+    let pointer = sketch.getPointer(o.e);
+    sketch.addPointerObject({ left: pointer.x, top: pointer.y }, this.pointerDuration, "testusersession");
+  }
+
   _onSketchMouseMove = (e) => {
-    // console.log("mmmmmove", e)
+    
+    this.lastEvent = e;
+    if (!this.scheduled) {
+      this.scheduled = true;
+      setTimeout(
+        () => {
+          this.scheduled = false;
+          this.displayPointer(this.lastEvent);
+        }, this.pointerDuration);
+    }
   }
 
   _onSketchMouseUp = (e) => {
@@ -272,49 +291,18 @@ class SketchFieldDemo extends React.Component {
   }
 
   _onAddObject = () => {
-    // const obj = {"type":"circle","version":"3.5.1","originX":"left","originY":"center","left":261,"top":272,"width":2,"height":2,"fill":"transparent","stroke":"black","strokeWidth":3,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"radius":1,"startAngle":0,"endAngle":6.283185307179586}
     const obj = {"id":"j","type":"triangle","version":"3.5.1","originX":"center","originY":"top","left":390,"top":163,"width":3,"height":3,"fill":"black","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0}
-
-    // const obj = {
-    //   "type":"group",
-    //   "version":"3.5.1",
-    //   "originX":"left",
-    //   "originY":"top",
-    //   "left":169,
-    //   "top":74.18,
-    //   "width":337.82,
-    //   "height":282.82,
-    //   "fill":"rgb(0,0,0)",
-    //   "stroke":null,
-    //   "strokeWidth":0,
-    //   "strokeDashArray":null,
-    //   "strokeLineCap":"butt",
-    //   "strokeDashOffset":0,
-    //   "strokeLineJoin":"miter",
-    //   "strokeMiterLimit":4,
-    //   "scaleX":1,"scaleY":1,
-    //   "angle":0,
-    //   "flipX":false,
-    //   "flipY":false,
-    //   "opacity":1,
-    //   "shadow":null,
-    //   "visible":true,
-    //   "clipTo":null,
-    //   "backgroundColor":"",
-    //   "fillRule":"nonzero",
-    //   "paintFirst":"fill",
-    //   "globalCompositeOperation":"source-over",
-    //   "transformMatrix":null,
-    //   "skewX":0,
-    //   "skewY":0,
-    //   "objects":[{"type":"line","version":"3.5.1","originX":"center","originY":"center","left":-8.41,"top":8.41,"width":311,"height":256,"fill":"black","stroke":"black","strokeWidth":10,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"x1":-155.5,"x2":155.5,"y1":128,"y2":-128},{"type":"triangle","version":"3.5.1","originX":"center","originY":"center","left":147.09,"top":-119.59,"width":30,"height":30,"fill":"black","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":50.54,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0}]}
     const objStr = JSON.stringify(obj)
     let sketch = this._sketch;
     sketch.addObject(objStr)
   }
 
+  _onAddPointerObject = () => {
+    let sketch = this._sketch;
+    sketch.addPointerObject("nakusyat", "abcd", {left: 50, top: 50})
+  }
+
   _onModifyObject = () => {
-    // const obj = {"id":'eMbCmATKBj_H06etPX7E_',"type":"circle","version":"3.5.1","originX":"left","originY":"center","left":517,"top":216,"width":267.73,"height":267.73,"fill":"transparent","stroke":"black","strokeWidth":3,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":35.11,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"radius":133.86280289908768,"startAngle":0,"endAngle":6.283185307179586}
     const obj = {"id":"j","type":"line","version":"3.5.1","originX":"center","originY":"center","left":659.91,"top":336.92,"width":12,"height":148,"fill":"black","stroke":"black","strokeWidth":2,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":10,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"x1":6.00002665094685,"x2":-6.00002665094685,"y1":74.00152346160806,"y2":-74.00152346160806}
     const objStr = JSON.stringify(obj)
     let sketch = this._sketch;
@@ -457,6 +445,7 @@ class SketchFieldDemo extends React.Component {
           
           <button onClick={this._onAddObject}>Add object</button>
           <button onClick={this._onModifyObject}>Modify object</button>
+          <button onClick={this._onAddPointerObject}>Add pointer object</button>
 
           <div className="col-xs-5 col-sm-5 col-md-3 col-lg-3">
             <Card style={styles.card}>
