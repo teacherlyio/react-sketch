@@ -378,6 +378,15 @@ class SketchField extends PureComponent {
     canvas.setBackgroundColor(color, () => canvas.renderAll())
   };
 
+  configureToolCanvas = () => {
+    this._selectedTool = this._tools[this.props.tool];
+    //Bring the cursor back to default if it is changed by a tool
+    this._fc.defaultCursor = 'default';
+    if(this._selectedTool){
+      this._selectedTool.configureCanvas(this.props);
+    }
+  }
+
   /**
    * Zoom the drawing by the factor specified
    *
@@ -848,13 +857,12 @@ class SketchField extends PureComponent {
       this._resize()
     }
 
-    if (this.props.tool !== prevProps.tool) {
-      this._selectedTool = this._tools[this.props.tool];
-      //Bring the cursor back to default if it is changed by a tool
-      this._fc.defaultCursor = 'default';
-      if(this._selectedTool){
-        this._selectedTool.configureCanvas(this.props);
-      }
+    if (this.props.tool !== prevProps.tool ||
+      this.props.lineWidth !== prevProps.lineWidth ||
+      this.props.lineColor !== prevProps.lineColor ||
+      this.props.fillColor !== prevProps.fillColor
+      ) {
+      this.configureToolCanvas()
     }
 
     if (this.props.backgroundColor !== prevProps.backgroundColor) {
