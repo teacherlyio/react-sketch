@@ -248,7 +248,14 @@ class SketchField extends PureComponent {
     this._history.keep([obj, prevState, currState]);
     
     let strObj = JSON.stringify(obj);
-    onObjectModified(strObj, obj.id);
+    const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group']
+    if (delay_objs.includes(obj.type)) {
+      setTimeout(() => {
+        onObjectModified(strObj, obj.id);
+      }, 200);
+    } else {
+      onObjectModified(strObj, obj.id);
+    }
   };
 
   /**
