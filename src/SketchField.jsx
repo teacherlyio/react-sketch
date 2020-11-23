@@ -788,6 +788,18 @@ class SketchField extends PureComponent {
     canvas.add(iText);
   };
 
+  getCanvasObjects = () => {
+    let canvas = this._fc;
+    const jsonData = []
+    const objects = canvas.getObjects();
+    objects.forEach(el => {
+      const objState = { ...el.__originalState, id: el.id}
+      jsonData.push(objState);
+    })
+
+    return jsonData;
+  }
+
   callEvent = (e, eventFunction) => {
     if(this._selectedTool)
       eventFunction(e);
