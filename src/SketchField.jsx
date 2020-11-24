@@ -633,7 +633,7 @@ class SketchField extends PureComponent {
       delete shapeData.path;
       shape.set(shapeData);
     } else if (type == 'I-text') {
-      shape = new fabric.Text(shapeData.text); 
+      shape = new fabric.IText(shapeData.text); 
       delete shapeData.text;
       shape.set(shapeData);
     } else if (type == 'Circle' || type == 'Rect' || type == 'Triangle') {
