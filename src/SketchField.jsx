@@ -579,6 +579,24 @@ class SketchField extends PureComponent {
     }
   };
 
+  changeSelectedStrokeColor = (color) => {
+    let canvas = this._fc;
+    let activeObj = canvas.getActiveObject();
+    if(activeObj) {
+      activeObj.set({stroke: color})
+      canvas.requestRenderAll();
+    }
+  }
+
+  changeSelectedFillColor = (color) => {
+    let canvas = this._fc;
+    let activeObj = canvas.getActiveObject();
+    if(activeObj) {
+      activeObj.set({fill: color})
+      canvas.requestRenderAll();
+    }
+  }
+
   /**
    * Set object as selected on the canvas
    */
