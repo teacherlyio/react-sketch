@@ -9,5 +9,6 @@ export default {
   Pan: 'pan',
   Triangle: 'triangle',
   Remove: 'remove',
+  Text: 'text',
   DefaultTool: 'default-tool',
 }
