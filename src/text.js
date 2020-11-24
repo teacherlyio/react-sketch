@@ -10,6 +10,7 @@ class Text extends FabricCanvasTool {
     let canvas = this._canvas;
     canvas.isDrawingMode = canvas.selection = false;
     canvas.forEachObject((o) => o.selectable = o.evented = false);
+    canvas.defaultCursor = 'text'
     this._width = props.lineWidth;
     this._color = props.lineColor;
     this._fill = props.fillColor;
@@ -27,6 +28,8 @@ class Text extends FabricCanvasTool {
         this.text = new fabric.IText('', {
             left: this.startX,
             top: this.startY,
+            fill: this._fill,
+            stroke: this._color,
           }
         )
         canvas.add(this.text);
