@@ -211,10 +211,10 @@ class SketchField extends PureComponent {
       const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group', 'i-text']
       if (delay_objs.includes(obj.type)) {
         setTimeout(() => {
-          onObjectAdded(JSON.stringify(obj), obj.id, obj.type);
+          onObjectAdded(JSON.stringify(obj), obj.id);
         }, 600);
       } else {
-        onObjectAdded(JSON.stringify(obj), obj.id, obj.type);
+        onObjectAdded(JSON.stringify(obj), obj.id);
       }
     }
   };
