@@ -18,9 +18,20 @@ class Text extends FabricCanvasTool {
 
   doMouseDown(o) {
     let canvas = this._canvas;
-    let activeObj = canvas.getActiveObject();
+    let exitElement = null;
+    const objects = canvas.getObjects();
+    objects.forEach(el => {
+      if(el.exited) {
+        exitElement = el;
+      }
+    });
 
-    if(!o.target && !activeObj){
+    if(exitElement) {
+      exitElement.exited = false;
+      return;
+    }
+
+    if(!o.target){
         this.isDown = true;
         let pointer = canvas.getPointer(o.e);
         this.startX = pointer.x;

@@ -180,6 +180,11 @@ class SketchField extends PureComponent {
     });
   };
 
+  _onTextExited = (e) => {
+    let obj = e.target;
+    obj.set({ 'exited': true })
+  }
+
   /**
    * Action when an object is added to the canvas
    */
@@ -875,7 +880,7 @@ class SketchField extends PureComponent {
     // canvas.on("text:event:changed", console.log)
     // canvas.on("text:selection:changed", console.log)
     // canvas.on("text:editing:entered", console.log)
-    // canvas.on("text:editing:exited", console.log)
+    canvas.on("text:editing:exited", e => this.callEvent(e, this._onTextExited))
 
     this.disableTouchScroll();
 
