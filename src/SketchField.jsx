@@ -14,6 +14,7 @@ import Rectangle from './rectangle';
 import Circle from './circle';
 import Pan from './pan';
 import Text from './text';
+import Ellipse from './ellipse';
 import Tool from './tools';
 import RectangleLabel from './rectangle-label';
 import DefaultTool from './defaul-tool';
@@ -128,6 +129,7 @@ class SketchField extends PureComponent {
     this._tools[Tool.Triangle] = new Triangle(fabricCanvas);
     this._tools[Tool.Remove] = new Remove(fabricCanvas);
     this._tools[Tool.Text] = new Text(fabricCanvas);
+    this._tools[Tool.Ellipse] = new Ellipse(fabricCanvas);
     this._tools[Tool.DefaultTool] = new DefaultTool(fabricCanvas);
   };
 
@@ -209,7 +211,11 @@ class SketchField extends PureComponent {
       this._fc.renderAll()
       
       const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group', 'i-text']
-      if (delay_objs.includes(obj.type)) {
+      if(obj.type == 'ellipse') {
+        setTimeout(() => {
+          onObjectAdded(JSON.stringify(obj), obj.id);
+        }, 800);
+      } else if (delay_objs.includes(obj.type)) {
         setTimeout(() => {
           onObjectAdded(JSON.stringify(obj), obj.id);
         }, 600);
@@ -255,8 +261,12 @@ class SketchField extends PureComponent {
     this._history.keep([obj, prevState, currState]);
     
     let strObj = JSON.stringify(obj);
-    const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group']
-    if (delay_objs.includes(obj.type)) {
+    const delay_objs = ['circle', 'rect', 'line', 'triangle', 'group', 'i-text']
+    if(obj.type == 'ellipse') {
+      setTimeout(() => {
+        onObjectModified(strObj, obj.id);
+      }, 400);
+    } else if (delay_objs.includes(obj.type)) {
       setTimeout(() => {
         onObjectModified(strObj, obj.id);
       }, 200);
@@ -641,7 +651,7 @@ class SketchField extends PureComponent {
       shape = new fabric.IText(shapeData.text); 
       delete shapeData.text;
       shape.set(shapeData);
-    } else if (type == 'Circle' || type == 'Rect' || type == 'Triangle') {
+    } else if (type == 'Circle' || type == 'Rect' || type == 'Triangle' || type == 'Ellipse') {
       shape = new fabric[type](shapeData);
     } else if (type == 'Line') {
       shape = new fabric.Line([shapeData.x1, shapeData.y1, shapeData.x2,  shapeData.y2], shapeData)

@@ -11,7 +11,7 @@ class Select extends FabricCanvasTool {
     canvas.hoverCursor = 'move';
     canvas.forEachObject((o) => {
       o.selectable = o.evented = true;
-      if(o.type == 'triangle') {
+      if(o.type == 'triangle' || o.type == 'ellipse') {
         o.setCoords();
       }
     });

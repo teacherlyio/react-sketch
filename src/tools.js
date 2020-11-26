@@ -10,5 +10,6 @@ export default {
   Triangle: 'triangle',
   Remove: 'remove',
   Text: 'text',
+  Ellipse: 'ellipse',
   DefaultTool: 'default-tool',
 }
