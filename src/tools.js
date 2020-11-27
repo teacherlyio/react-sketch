@@ -12,4 +12,5 @@ export default {
   Text: 'text',
   Ellipse: 'ellipse',
   DefaultTool: 'default-tool',
+  Polygon: 'polygon',
 }

@@ -15,6 +15,7 @@ import Circle from './circle';
 import Pan from './pan';
 import Text from './text';
 import Ellipse from './ellipse';
+import Polygon from './polygon';
 import Tool from './tools';
 import RectangleLabel from './rectangle-label';
 import DefaultTool from './defaul-tool';
@@ -130,6 +131,7 @@ class SketchField extends PureComponent {
     this._tools[Tool.Remove] = new Remove(fabricCanvas);
     this._tools[Tool.Text] = new Text(fabricCanvas);
     this._tools[Tool.Ellipse] = new Ellipse(fabricCanvas);
+    this._tools[Tool.Polygon] = new Polygon(fabricCanvas);
     this._tools[Tool.DefaultTool] = new DefaultTool(fabricCanvas);
   };
 
@@ -344,6 +346,10 @@ class SketchField extends PureComponent {
     }
     onMouseUp(e);
   };
+
+  _onWindowDoubleClick = (e) => {
+    this._selectedTool.doWindowDoubleClick(e);
+  }
 
   /**
    * Track the resize of the window and update our state
@@ -575,7 +581,7 @@ class SketchField extends PureComponent {
    */
   removeSelected = () => {
     let canvas = this._fc;
-    let activeObj = canvas.getActiveObject();
+    let activeObj = canvas && canvas.getActiveObject();
     if (activeObj) {
       let selected = [];
       if (activeObj.type === 'activeSelection') {
@@ -891,6 +897,8 @@ class SketchField extends PureComponent {
     // canvas.on("text:selection:changed", console.log)
     // canvas.on("text:editing:entered", console.log)
     canvas.on("text:editing:exited", e => this.callEvent(e, this._onTextExited))
+    // window events
+    fabric.util.addListener(window, 'dblclick', e => this.callEvent(e, this._onWindowDoubleClick))
 
     this.disableTouchScroll();
 
@@ -901,7 +909,10 @@ class SketchField extends PureComponent {
 
   };
 
-  componentWillUnmount = () => window.removeEventListener('resize', this._resize);
+  componentWillUnmount = () =>  { 
+    window.removeEventListener('resize', this._resize);
+    window.removeEventListener('dblclick', e => this.callEvent(e, this._onWindowDoubleClick));
+  }
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.state.parentWidth !== prevState.parentWidth

@@ -27,6 +27,10 @@ class FabricCanvasTool {
   doMouseOut(event) {
 
   }
+
+  doWindowDoubleClick(event) {
+    
+  }
 }
 
 export default FabricCanvasTool;
