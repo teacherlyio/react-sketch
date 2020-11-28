@@ -602,6 +602,31 @@ class SketchField extends PureComponent {
     }
   };
 
+  /**
+   * Remove object by id from the canvas
+   */
+  removeObjectById = (id) => {
+    let canvas = this._fc;
+    var objToRemove = canvas.getObjects().find((o) => {
+      return id == o.id;
+    });
+    if(objToRemove) {
+      canvas.remove(objToRemove);
+      canvas.requestRenderAll();
+    }
+  }
+
+  /**
+   * Get object by id from the canvas
+   */
+  getObjectById = (id) => {
+    let canvas = this._fc;
+    var obj = canvas.getObjects().find((o) => {
+      return id == o.id;
+    });
+    return obj;
+  }
+
   changeSelectedStrokeColor = (color) => {
     let canvas = this._fc;
     let activeObj = canvas.getActiveObject();
