@@ -41,6 +41,8 @@ class Text extends FabricCanvasTool {
             top: this.startY,
             fill: this._fill,
             stroke: this._color,
+            selectable: false,
+            evented: false,
           }
         )
         canvas.add(this.text);
