@@ -6,10 +6,12 @@ class Remove extends FabricCanvasTool {
 
   configureCanvas(props) {
     let canvas = this._canvas;
-
     canvas.isDrawingMode = false;
-    canvas.selection = false;
+    canvas.selection = true;
     canvas.hoverCursor = 'url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/happy.png"), auto';
+    canvas.forEachObject((o) => {
+      o.selectable = o.evented = true;
+    });
   }
 
   doMouseDown(o) {

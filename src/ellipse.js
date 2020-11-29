@@ -31,6 +31,8 @@ class Ellipse extends FabricCanvasTool {
         fill: this._fill,
         stroke: this._color,
         strokeWidth: this._width,
+        selectable: false,
+        evented: false,
     });
     canvas.add(this.ellipse);
   }
@@ -59,6 +61,7 @@ class Ellipse extends FabricCanvasTool {
     } else {
       this.ellipse.set({originY: 'top'  });
     }
+    this.ellipse.setCoords();
     canvas.renderAll();
   }
 

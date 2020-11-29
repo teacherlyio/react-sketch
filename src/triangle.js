@@ -12,6 +12,7 @@ class Triangle extends FabricCanvasTool {
     canvas.forEachObject((o) => o.selectable = o.evented = false);
     this._width = props.lineWidth;
     this._color = props.lineColor;
+    this._fill = props.fillColor;
   }
 
   doMouseDown(o) {
@@ -23,12 +24,15 @@ class Triangle extends FabricCanvasTool {
     this.origY = pointer.y
 
     this.head = new fabric.Triangle({
-      fill: this._color,
+      strokeWidth: this._width,
+      stroke: this._color,
+      fill: this._fill,
       left: pointer.x,
       top: pointer.y,
       height: 3,
       width: 3,
-      selectable: true,
+      selectable: false,
+      evented: false,
       originX: 'center',
     });
 
@@ -44,7 +48,7 @@ class Triangle extends FabricCanvasTool {
         width: Math.abs(this.origX - pointer.x),
         height: Math.abs(this.origY - pointer.y)
     });
-
+    this.head.setCoords();
     canvas.renderAll();
   }
 
