@@ -630,7 +630,18 @@ class SketchField extends PureComponent {
   changeSelectedStrokeColor = (color) => {
     let canvas = this._fc;
     let activeObj = canvas.getActiveObject();
-    if(activeObj) {
+
+    // for arrow element
+    if(activeObj && activeObj.type === 'group') {
+      if(activeObj.item(0)) activeObj.item(0).set({stroke: color})
+      if(activeObj.item(1)) activeObj.item(1).set({stroke: color})
+      if(activeObj.item(0)) activeObj.item(0).set({fill: color})
+      if(activeObj.item(1)) activeObj.item(1).set({fill: color})
+      canvas.requestRenderAll();
+    }
+
+     // for the rest of the elements
+    if(activeObj && activeObj.type !== 'group') {
       activeObj.set({stroke: color})
       canvas.requestRenderAll();
     }
