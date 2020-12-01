@@ -653,15 +653,15 @@ class SketchField extends PureComponent {
       if(activeObj.item(1)) activeObj.item(1).set({stroke: color});
       if(activeObj.item(0)) activeObj.item(0).set({fill: color});
       if(activeObj.item(1)) activeObj.item(1).set({fill: color});
-      activeObj.setCoords();
       canvas.renderAll();
+      canvas.trigger('object:modified', {target: activeObj});
     }
 
      // for the rest of the elements
     if(activeObj && activeObj.type !== 'group') {
       activeObj.set({stroke: color});
-      activeObj.setCoords();
       canvas.renderAll();
+      canvas.trigger('object:modified', {target: activeObj});
     }
   }
 
@@ -669,8 +669,9 @@ class SketchField extends PureComponent {
     let canvas = this._fc;
     let activeObj = canvas.getActiveObject();
     if(activeObj) {
-      activeObj.set({fill: color})
+      activeObj.set({fill: color});
       canvas.renderAll();
+      canvas.trigger('object:modified', {target: activeObj});
     }
   }
 
