@@ -633,6 +633,15 @@ class SketchField extends PureComponent {
   }
 
   /**
+   * Make active object deslected if any
+   */
+  deselectActiveObject = () => {
+    let canvas = this._fc;
+    canvas.discardActiveObject();
+    canvas.requestRenderAll();
+  }
+
+  /**
    * Get object by id from the canvas
    */
   getObjectById = (id) => {
