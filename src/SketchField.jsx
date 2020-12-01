@@ -190,6 +190,22 @@ class SketchField extends PureComponent {
   }
 
   /**
+   * Action when an object selection is created
+   */
+  _onSelectionCreated = (e) => {
+    const {onSelectionCreated} = this.props;
+    onSelectionCreated(e);
+  };
+
+    /**
+   * Action when an object selection is updated
+   */
+  _onSelectionUpdated = (e) => {
+    const {onSelectionUpdated} = this.props;
+    onSelectionUpdated(e);
+  };
+
+  /**
    * Action when an object is added to the canvas
    */
   _onObjectAdded = (e) => {
@@ -633,17 +649,19 @@ class SketchField extends PureComponent {
 
     // for arrow element
     if(activeObj && activeObj.type === 'group') {
-      if(activeObj.item(0)) activeObj.item(0).set({stroke: color})
-      if(activeObj.item(1)) activeObj.item(1).set({stroke: color})
-      if(activeObj.item(0)) activeObj.item(0).set({fill: color})
-      if(activeObj.item(1)) activeObj.item(1).set({fill: color})
-      canvas.requestRenderAll();
+      if(activeObj.item(0)) activeObj.item(0).set({stroke: color});
+      if(activeObj.item(1)) activeObj.item(1).set({stroke: color});
+      if(activeObj.item(0)) activeObj.item(0).set({fill: color});
+      if(activeObj.item(1)) activeObj.item(1).set({fill: color});
+      activeObj.setCoords();
+      canvas.renderAll();
     }
 
      // for the rest of the elements
     if(activeObj && activeObj.type !== 'group') {
-      activeObj.set({stroke: color})
-      canvas.requestRenderAll();
+      activeObj.set({stroke: color});
+      activeObj.setCoords();
+      canvas.renderAll();
     }
   }
 
@@ -652,7 +670,7 @@ class SketchField extends PureComponent {
     let activeObj = canvas.getActiveObject();
     if(activeObj) {
       activeObj.set({fill: color})
-      canvas.requestRenderAll();
+      canvas.renderAll();
     }
   }
 
@@ -928,6 +946,8 @@ class SketchField extends PureComponent {
     canvas.on('object:moving', e => this.callEvent(e, this._onObjectMoving));
     canvas.on('object:scaling', e => this.callEvent(e, this._onObjectScaling));
     canvas.on('object:rotating', e => this.callEvent(e, this._onObjectRotating));
+    canvas.on('selection:created', e => this.callEvent(e, this._onSelectionCreated))
+    canvas.on('selection:updated', e => this.callEvent(e, this._onSelectionUpdated))
     // IText Events fired on Adding Text
     // canvas.on("text:event:changed", console.log)
     // canvas.on("text:selection:changed", console.log)
