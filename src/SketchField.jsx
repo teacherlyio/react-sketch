@@ -961,7 +961,9 @@ class SketchField extends PureComponent {
     // IText Events fired on Adding Text
     // canvas.on("text:event:changed", console.log)
     // canvas.on("text:selection:changed", console.log)
-    // canvas.on("text:editing:entered", console.log)
+    canvas.on("text:editing:entered", e => {
+      if(e && e.target && e.target.hiddenTextarea) e.target.hiddenTextarea.setAttribute('id', 'i-text-hidden')
+    })
     canvas.on("text:editing:exited", e => this.callEvent(e, this._onTextExited))
     // window events
     fabric.util.addListener(window, 'dblclick', e => this.callEvent(e, this._onWindowDoubleClick))

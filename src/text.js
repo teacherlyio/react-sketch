@@ -13,7 +13,7 @@ class Text extends FabricCanvasTool {
     canvas.defaultCursor = 'text'
     this._width = props.lineWidth;
     this._color = props.lineColor;
-    this._fill = props.fillColor;
+    this._fill = props.lineColor;
   }
 
   doMouseDown(o) {
