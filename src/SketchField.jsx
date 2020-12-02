@@ -35,6 +35,8 @@ class SketchField extends PureComponent {
     lineWidth: PropTypes.number,
     // the fill color of the shape when applicable
     fillColor: PropTypes.string,
+    // the hover icon for Remove tool
+    removeIcon: PropTypes.string,
     // the background color of the sketch
     backgroundColor: PropTypes.string,
     // the opacity of the object
@@ -95,6 +97,7 @@ class SketchField extends PureComponent {
     lineWidth: 10,
     fillColor: 'transparent',
     backgroundColor: 'transparent',
+    removeIcon: null,
     opacity: 1.0,
     undoSteps: 25,
     tool: null,
