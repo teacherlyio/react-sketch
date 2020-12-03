@@ -497,7 +497,7 @@ class SketchFieldDemo extends React.Component {
                         <MenuItem value={Tools.Pencil} key="Pencil">Pencil</MenuItem>
                         <MenuItem value={Tools.Text} key="Pencil">Text</MenuItem>
                         <MenuItem value={Tools.Ellipse} key="Pencil">Ellipse</MenuItem>
-                        <MenuItem value={Tools.Polygon} key="Pan">Polygon</MenuItem>
+                        <MenuItem value={Tools.Polygon} key="Polygon">Polygon</MenuItem>
                         <MenuItem value={Tools.Line} key="Line">Line</MenuItem>
                         <MenuItem value={Tools.Arrow} key="Arrow">Arrow</MenuItem>
                         <MenuItem value={Tools.Rectangle} key="Rectangle">Rectangle</MenuItem>
@@ -505,7 +505,8 @@ class SketchFieldDemo extends React.Component {
                         <MenuItem value={Tools.Pan} key="Pan">Pan</MenuItem>
                         <MenuItem value={Tools.Triangle} key="Triangle">Triangle</MenuItem>
                         <MenuItem value={Tools.Remove} key="Remove">Remove</MenuItem>
-                        <MenuItem value={Tools.RectangleLabel} key="Pan">RectangleLabel</MenuItem>
+                        <MenuItem value={Tools.RectangleLabel} key="RectangleLabel">RectangleLabel</MenuItem>
+                        <MenuItem value={Tools.Pointer} key="Pointer">Pointer</MenuItem>
                       </TextField>
                     </div>
                   </div>

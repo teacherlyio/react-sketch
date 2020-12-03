@@ -141,7 +141,6 @@ class Polygon extends FabricCanvasTool {
     canvas.add(roof);
     canvas.renderAll();
 
-    console.log("double click");
     //clear arrays
     roofPoints = [];
     lines = [];

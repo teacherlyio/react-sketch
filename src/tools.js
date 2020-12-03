@@ -13,4 +13,5 @@ export default {
   Ellipse: 'ellipse',
   DefaultTool: 'default-tool',
   Polygon: 'polygon',
+  Pointer: 'pointer',
 }

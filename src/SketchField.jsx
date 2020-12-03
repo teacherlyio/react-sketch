@@ -19,6 +19,7 @@ import Polygon from './polygon';
 import Tool from './tools';
 import RectangleLabel from './rectangle-label';
 import DefaultTool from './defaul-tool';
+import Pointer from './pointer';
 import { nanoid } from 'nanoid'
 
 const fabric = require('fabric').fabric;
@@ -84,6 +85,10 @@ class SketchField extends PureComponent {
     onObjectScaling: PropTypes.func,
     // event object rotating
     onObjectRotating: PropTypes.func,
+    // event text selected
+    onSelectionCreated: PropTypes.func,
+    // event text selected
+    onSelectionUpdated: PropTypes.func,
     // Class name to pass to container div of canvas
     className: PropTypes.string,
     // Style options to pass to container div of canvas
@@ -136,6 +141,7 @@ class SketchField extends PureComponent {
     this._tools[Tool.Ellipse] = new Ellipse(fabricCanvas);
     this._tools[Tool.Polygon] = new Polygon(fabricCanvas);
     this._tools[Tool.DefaultTool] = new DefaultTool(fabricCanvas);
+    this._tools[Tool.Pointer] = new Pointer(fabricCanvas);
   };
 
   /**
@@ -755,20 +761,18 @@ class SketchField extends PureComponent {
       objToModify.animate(options, { onChange: canvas.renderAll.bind(canvas), duration });
 
     } else {
-  
-      let circle = new fabric.Circle({
-        id: userSession,
-        ...options,
-        originX: 'left', 
-        originY: 'center',
-        strokeWidth: 1,
-        stroke: 'red',
-        fill: 'red',
-        selectable: false,
-        evented: false,
-        radius: 4
+
+      fabric.Image.fromURL('/assets/pointer_tool.svg', function(myImg) {
+        let img = myImg.set({ 
+          id: userSession,
+          ...options,
+          originX: 'left', 
+          originY: 'center',
+          selectable: false,
+          evented: false,
+        });
+        canvas.add(img); 
       });
-      canvas.add(circle);
     }
   }
 
