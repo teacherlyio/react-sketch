@@ -8,10 +8,10 @@ class Remove extends FabricCanvasTool {
     let canvas = this._canvas;
     canvas.isDrawingMode = false;
     canvas.selection = true;
-    if(props.removeIcon) canvas.hoverCursor = `url('${props.removeIcon}'), auto`;
     canvas.forEachObject((o) => {
       o.selectable = o.evented = true;
     });
+    if(props.removeIcon) canvas.hoverCursor = `url('${props.removeIcon}'), auto`;
   }
 
   doMouseDown(o) {
