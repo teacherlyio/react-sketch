@@ -463,6 +463,7 @@ class SketchFieldDemo extends React.Component {
               onMouseUp={this._onSketchMouseUp}
               tool={this.state.tool}
               removeIcon={'http://localhost:23000/assets/erase.svg'}
+              pointerIcon={'http://localhost:23000/assets/pointer_tool.svg'}
             />
           </div>
           

@@ -10,7 +10,7 @@ class Pointer extends FabricCanvasTool {
     canvas.isDrawingMode = canvas.selection = false;
     canvas.forEachObject((o) => o.selectable = o.evented = false);
     canvas.discardActiveObject();
-    canvas.defaultCursor = `url('/assets/pointer_tool.svg'), auto`;
+    if(props.pointerIcon) canvas.defaultCursor = `url('${props.pointerIcon}'), auto`;
     canvas.renderAll();
   }
 

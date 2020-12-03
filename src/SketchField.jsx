@@ -762,7 +762,7 @@ class SketchField extends PureComponent {
 
     } else {
 
-      fabric.Image.fromURL('/assets/pointer_tool.svg', function(myImg) {
+      fabric.Image.fromURL(this.props.pointerIcon, function(myImg) {
         let img = myImg.set({ 
           id: userSession,
           ...options,
