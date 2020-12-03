@@ -158,6 +158,7 @@ class SketchFieldDemo extends React.Component {
       enableRemoveSelected: event.target.value === Tools.Select,
       enableCopyPaste: event.target.value === Tools.Select
     });
+    this._sketch.deselectActiveObject();
   };
 
   _save = () => {
@@ -240,6 +241,7 @@ class SketchFieldDemo extends React.Component {
   };
 
   _onSketchChange = () => {
+    console.log("sketch change")
     let prev = this.state.canUndo;
     let now = this._sketch.canUndo();
     if (prev !== now) {
@@ -249,6 +251,9 @@ class SketchFieldDemo extends React.Component {
 
   _onSketchObjectAdd = (obj, id) => {
     console.log("object added callback", obj, id)
+    // this.setState({
+    //   tool: Tools.Select
+    // });
   }
 
   _onSketchObjectModified = (obj, id) => {
@@ -288,6 +293,16 @@ class SketchFieldDemo extends React.Component {
 
   _onSketchMouseUp = (e) => {
     // console.log("uuuuuup", e)
+  }
+
+  _onChangeStrokeColor = () => {
+    let sketch = this._sketch;
+    sketch.changeSelectedStrokeColor('red')
+  }
+
+  _onChangeFillColor = () => {
+    let sketch = this._sketch;
+    sketch.changeSelectedFillColor('yellow')
   }
 
   _onAddObject = () => {
@@ -331,6 +346,11 @@ class SketchFieldDemo extends React.Component {
   };
 
   _addText = () => this._sketch.addText(this.state.text);
+
+  getObjects = () => {
+    const objs = this._sketch.getCanvasObjects();
+    console.log("objs", objs);
+  }
 
   componentDidMount = () => {
     (function(console) {
@@ -437,18 +457,23 @@ class SketchFieldDemo extends React.Component {
               onObjectMoving={this._onSketchObjectMoving}
               onObjectScaling={this._onSketchObjectScaling}
               onMouseDown={this._onSketchMouseDown}
-              onMouseMove={this._onSketchMouseMove}
+              onSelectionCreated={(e) => {console.log("on selection created", e)}}
+              onSelectionUpdated={(e) => {console.log("on selection updated", e)}}
+              // onMouseMove={this._onSketchMouseMove}
               onMouseUp={this._onSketchMouseUp}
               tool={this.state.tool}
+              removeIcon={'http://localhost:23000/assets/erase.svg'}
             />
           </div>
           
-          <button onClick={this._onAddObject}>Add object</button>
-          <button onClick={this._onModifyObject}>Modify object</button>
-          <button onClick={this._onAddPointerObject}>Add pointer object</button>
+          {/* <button onClick={this._onChangeFillColor}>Change fill color</button>
+          <button onClick={this._onChangeStrokeColor}>Change stroke color</button> */}
+          {/* {/* <button onClick={this._onModifyObject}>Modify object</button> */}
+          
 
           <div className="col-xs-5 col-sm-5 col-md-3 col-lg-3">
             <Card style={styles.card}>
+              <button onClick={this.getObjects}>Get elements</button>
               <CardHeader
                 title="Tools"
                 subheader="Available tools"
@@ -470,6 +495,9 @@ class SketchFieldDemo extends React.Component {
                         helperText="Please select Canvas Tool">
                         <MenuItem value={Tools.Select} key="Select">Select</MenuItem>
                         <MenuItem value={Tools.Pencil} key="Pencil">Pencil</MenuItem>
+                        <MenuItem value={Tools.Text} key="Pencil">Text</MenuItem>
+                        <MenuItem value={Tools.Ellipse} key="Pencil">Ellipse</MenuItem>
+                        <MenuItem value={Tools.Polygon} key="Pan">Polygon</MenuItem>
                         <MenuItem value={Tools.Line} key="Line">Line</MenuItem>
                         <MenuItem value={Tools.Arrow} key="Arrow">Arrow</MenuItem>
                         <MenuItem value={Tools.Rectangle} key="Rectangle">Rectangle</MenuItem>
@@ -523,7 +551,7 @@ class SketchFieldDemo extends React.Component {
                 </CardContent>
               </Collapse>
             </Card>
-            <Card style={styles.card}>
+            {/* <Card style={styles.card}>
               <CardHeader
                 title="Controls"
                 subheader="Copy/Paste etc."
@@ -744,7 +772,7 @@ class SketchFieldDemo extends React.Component {
                   </Button>
                 </CardContent>
               </Collapse>
-            </Card>
+            </Card> */}
           </div>
         </div>
         <div style={{ width: 0 }}>
