@@ -95,6 +95,8 @@ class SketchField extends PureComponent {
     style: PropTypes.object,
     // StaticCanvas vs Canvas option
     isPreview: PropTypes.bool,
+    // flag for disable
+    disableMultipleSelection: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -924,7 +926,8 @@ class SketchField extends PureComponent {
       undoSteps,
       defaultValue,
       isPreview = false,
-      backgroundColor
+      backgroundColor,
+      disableMultipleSelection,
     } = this.props;
 
     let canvas = this._fc = isPreview ? new fabric.StaticCanvas(this._canvas) : new fabric.Canvas(this._canvas/*, {
@@ -963,8 +966,15 @@ class SketchField extends PureComponent {
     canvas.on('object:moving', e => this.callEvent(e, this._onObjectMoving));
     canvas.on('object:scaling', e => this.callEvent(e, this._onObjectScaling));
     canvas.on('object:rotating', e => this.callEvent(e, this._onObjectRotating));
-    canvas.on('selection:created', e => this.callEvent(e, this._onSelectionCreated))
+    
     canvas.on('selection:updated', e => this.callEvent(e, this._onSelectionUpdated))
+
+    if(disableMultipleSelection) {
+      canvas.on('selection:created', (e) => {
+        if(e.target.type === 'activeSelection') canvas.discardActiveObject();
+      })
+    } else canvas.on('selection:created', e => this.callEvent(e, this._onSelectionCreated))
+
     // IText Events fired on Adding Text
     // canvas.on("text:event:changed", console.log)
     // canvas.on("text:selection:changed", console.log)
