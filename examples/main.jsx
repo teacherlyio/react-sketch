@@ -427,6 +427,7 @@ class SketchFieldDemo extends React.Component {
         <div className="row">
           <div className="col-xs-7 col-sm-7 col-md-9 col-lg-9">
             <SketchField
+              disableMultipleSelection
               name="sketch"
               className="canvas-area"
               ref={c => (this._sketch = c)}
