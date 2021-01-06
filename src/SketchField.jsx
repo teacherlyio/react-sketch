@@ -969,11 +969,10 @@ class SketchField extends PureComponent {
     
     canvas.on('selection:updated', e => this.callEvent(e, this._onSelectionUpdated))
 
-    if(disableMultipleSelection) {
-      canvas.on('selection:created', (e) => {
-        if(e.target.type === 'activeSelection') canvas.discardActiveObject();
-      })
-    } else canvas.on('selection:created', e => this.callEvent(e, this._onSelectionCreated))
+    canvas.on('selection:created', e => {
+      if(disableMultipleSelection && e.target.type === 'activeSelection') canvas.discardActiveObject();
+      this.callEvent(e, this._onSelectionCreated)
+    })
 
     // IText Events fired on Adding Text
     // canvas.on("text:event:changed", console.log)

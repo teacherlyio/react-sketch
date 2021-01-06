@@ -1,6 +1,6 @@
 {
   "name": "react-sketch-whiteboard-teacherly",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sketch Element for React based applications, backed-up by fabricjs as its core",
   "keywords": [
     "react",
