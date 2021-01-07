@@ -275,7 +275,7 @@ class SketchFieldDemo extends React.Component {
   displayPointer = (o) => {
     let sketch = this._sketch;
     let pointer = sketch.getPointer(o.e);
-    sketch.addPointerObject({ left: pointer.x, top: pointer.y }, this.pointerDuration, "testusersession");
+    sketch.addPointerObject({ left: pointer.x, top: pointer.y, width: 24, height: 24 }, this.pointerDuration, "testusersession");
   }
 
   _onSketchMouseMove = (e) => {
@@ -459,7 +459,7 @@ class SketchFieldDemo extends React.Component {
               onMouseDown={this._onSketchMouseDown}
               onSelectionCreated={(e) => {console.log("on selection created", e)}}
               onSelectionUpdated={(e) => {console.log("on selection updated", e)}}
-              // onMouseMove={this._onSketchMouseMove}
+              onMouseMove={this._onSketchMouseMove}
               onMouseUp={this._onSketchMouseUp}
               tool={this.state.tool}
               removeIcon={'http://localhost:23000/assets/erase.svg'}
